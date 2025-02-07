@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Para mi Valentín</title>
+    <style>
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(
+          135deg,
+          #f4e8c1,
+          #d8c9a8
+        ); /* Fondo estilo papel antiguo */
+        font-family: "Georgia", serif;
+        overflow: hidden;
+      }
+
+      .card {
+        position: relative;
+        background: #fff; /* Fondo blanco */
+        padding: 40px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        text-align: center;
+        max-width: 400px;
+        width: 100%;
+        border: 1px solid #ccc; /* Borde sutil */
+        background-image: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h100v100H0z' fill='none'/%3E%3Cpath d='M50 0c27.614 0 50 22.386 50 50s-22.386 50-50 50S0 77.614 0 50 22.386 0 50 0zm0 10c-22.091 0-40 17.909-40 40s17.909 40 40 40 40-17.909 40-40-17.909-40-40-40z' fill='%23f0e68c' fill-opacity='0.1'/%3E%3C/svg%3E"); /* Textura sutil */
+      }
+
+      h1 {
+        font-size: 3rem;
+        color: #8b0000; /* Rojo oscuro */
+        margin-bottom: 20px;
+        font-family: "Dancing Script", cursive;
+      }
+
+      .yes-button {
+        padding: 10px 20px;
+        font-size: 1.5rem;
+        color: white;
+        background: #8b0000; /* Rojo oscuro */
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .yes-button:hover {
+        transform: scale(1.05);
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+      }
+
+      .figures {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: none;
+        justify-content: center;
+        align-items: center;
+        background-color: rgba(0, 0, 0, 0.8);
+        z-index: 2;
+      }
+
+      .figure {
+        position: absolute;
+        font-size: 30px;
+        animation: float 5s ease-in-out infinite;
+      }
+
+      .figure.heart::before {
+        content: "❤️";
+      }
+
+      .figure.star::before {
+        content: "⭐";
+      }
+
+      .figure.circle::before {
+        content: "🔵";
+      }
+
+      .figure.moon::before {
+        content: "🌙";
+      }
+
+      .figure.sun::before {
+        content: "☀️";
+      }
+
+      .figure.flower::before {
+        content: "🌸";
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) scale(1);
+          opacity: 1;
+        }
+        50% {
+          transform: translateY(-20px) scale(1.2);
+          opacity: 0.8;
+        }
+      }
+
+      .message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 1.5rem;
+        color: white;
+        text-align: center;
+        opacity: 0;
+        animation: fadeIn 5s ease-in-out forwards;
+        font-family: "Dancing Script", cursive;
+        white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+        overflow: hidden; /* Oculta el texto que aún no se ha "escrito" */
+        border-right: 2px solid white; /* Efecto de cursor */
+      }
+
+      @keyframes fadeIn {
+        0% {
+          opacity: 0;
+        }
+        100% {
+          opacity: 1;
+        }
+      }
+
+      @keyframes typing {
+        from {
+          width: 0;
+        }
+        to {
+          width: 100%;
+        }
+      }
+
+      @keyframes blinkCursor {
+        50% {
+          border-right-color: transparent;
+        }
+      }
+
+      /* Estampilla con corazón */
+      .stamp {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        width: 50px;
+        height: 50px;
+        background: #ffcccc; /* Color de fondo de la estampilla */
+        border: 2px solid #8b0000; /* Borde de la estampilla */
+        border-radius: 50%; /* Forma circular */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Sombra para efecto flotante */
+      }
+
+      .stamp::before {
+        content: "❤️";
+        font-size: 30px;
+        color: #8b0000; /* Color del corazón */
+      }
+
+      /* Estela de corazones */
+      .heart-trail {
+        position: absolute;
+        font-size: 20px;
+        color: #ff1493; /* Color rosa fuerte */
+        pointer-events: none; /* Evita que los corazones interfieran con el cursor */
+        animation: fadeOut 1s ease-out forwards;
+      }
+
+      @keyframes fadeOut {
+        0% {
+          opacity: 1;
+        }
+        100% {
+          opacity: 0;
+        }
+      }
+
+      /* Rollos fotográficos */
+      .photo-reel {
+        position: absolute;
+        width: 150px;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px; /* Espacio entre imágenes */
+      }
+
+      .photo-reel.left {
+        left: 0;
+        animation: scrollUp 30s linear infinite;
+      }
+
+      .photo-reel.right {
+        right: 0;
+        animation: scrollDown 30s linear infinite;
+      }
+
+      .photo-reel img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        object-fit: cover; /* Ajusta la imagen sin recortarla */
+      }
+
+      @keyframes scrollUp {
+        0% {
+          transform: translateY(0);
+        }
+        100% {
+          transform: translateY(-100%);
+        }
+      }
+
+      @keyframes scrollDown {
+        0% {
+          transform: translateY(-100%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Fuente bonita -->
+  </head>
+  <body>
+    <div class="card">
+      <div class="stamp"></div>
+      <!-- Estampilla con corazón -->
+      <h1>¿Quieres ser mi Valentín?</h1>
+      <button class="yes-button" onclick="startAnimation()">Sí</button>
+    </div>
+
+    <div class="figures" id="figures">
+      <!-- Rollo fotográfico izquierdo -->
+      <div class="photo-reel left">
+        <img src="IMG_1.JPEG" alt="Foto 1" />
+        <img src="IMG_2.JPEG" alt="Foto 2" />
+        <img src="IMG_3.JPEG" alt="Foto 3" />
+        <img src="IMG_4.JPEG" alt="Foto 4" />
+        <!--<img src="IMG_5.PNG" alt="Foto 5" />-->
+      </div>
+
+      <!-- Rollo fotográfico derecho -->
+      <div class="photo-reel right">
+        <img src="IMG_6.JPEG" alt="Foto 6" />
+        <img src="IMG_7.JPEG" alt="Foto 7" />
+        <img src="IMG_8.JPEG" alt="Foto 8" />
+        <img src="IMG_9.JPEG" alt="Foto 9" />
+        <img src="IMG_10.JPEG" alt="Foto 10" />
+        <img src="IMG_11.JPEG" alt="Foto 11" />
+      </div>
+
+      <div class="message" id="message">
+        Eres la mujer que quiero en mi vida, me haces demasiado feliz. <br />
+        Cada día a tu lado es un regalo, y no puedo imaginar mi vida sin ti.
+        <br />
+        Te amo con todo mi corazón. 💖
+      </div>
+    </div>
+
+    <script>
+      let isTrailActive = true; // Controla si la estela está activa
+
+      // Función para crear corazones en la estela del cursor
+      function createHeartTrail(event) {
+        if (!isTrailActive) return; // Si la estela está desactivada, no hacer nada
+
+        const heart = document.createElement("div");
+        heart.classList.add("heart-trail");
+        heart.innerHTML = "❤️";
+        heart.style.left = `${event.clientX}px`;
+        heart.style.top = `${event.clientY}px`;
+        document.body.appendChild(heart);
+
+        // Eliminar el corazón después de la animación
+        setTimeout(() => {
+          heart.remove();
+        }, 1000); // 1 segundo
+      }
+
+      // Escuchar el movimiento del cursor
+      document.addEventListener("mousemove", createHeartTrail);
+
+      function startAnimation() {
+        // Desactivar la estela de corazones
+        isTrailActive = false;
+
+        // Ocultar la carta
+        document.querySelector(".card").style.display = "none";
+
+        // Mostrar las figuras
+        const figuresContainer = document.getElementById("figures");
+        figuresContainer.style.display = "flex";
+
+        // Iniciar la animación de escritura
+        const message = document.getElementById("message");
+        message.style.animation =
+          "typing 5s steps(40, end), blinkCursor 0.75s step-end infinite";
+        message.style.opacity = 1; // Asegurar que el mensaje sea visible
+
+        // Crear figuras aleatorias cada cierto tiempo
+        setInterval(() => {
+          createFigure();
+        }, 500); // Crear una figura cada 500ms
+      }
+
+      function createFigure() {
+        const figuresContainer = document.getElementById("figures");
+
+        // Crear una figura
+        const figure = document.createElement("div");
+        figure.classList.add("figure");
+
+        // Elegir un tipo de figura al azar
+        const types = ["heart", "star", "circle", "moon", "sun", "flower"];
+        const type = types[Math.floor(Math.random() * types.length)];
+        figure.classList.add(type);
+
+        // Posicionar la figura aleatoriamente
+        const x = Math.random() * 100;
+        const y = Math.random() * 100;
+        figure.style.left = `${x}%`;
+        figure.style.top = `${y}%`;
+
+        // Añadir la figura al contenedor
+        figuresContainer.appendChild(figure);
+
+        // Eliminar la figura después de un tiempo
+        setTimeout(() => {
+          figure.remove();
+        }, 5000); // 5 segundos
+      }
+    </script>
+  </body>
+</html>
