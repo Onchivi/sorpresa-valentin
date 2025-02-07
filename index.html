@@ -40,6 +40,8 @@
         color: #8b0000; /* Rojo oscuro */
         margin-bottom: 20px;
         font-family: "Dancing Script", cursive;
+        white-space: normal; /* Permite que el texto se divida en varias líneas */
+        word-wrap: break-word; /* Evita que el texto se desborde */
       }
 
       .yes-button {
@@ -125,9 +127,9 @@
         opacity: 0;
         animation: fadeIn 5s ease-in-out forwards;
         font-family: "Dancing Script", cursive;
-        white-space: nowrap; /* Evita que el texto se divida en varias líneas */
-        overflow: hidden; /* Oculta el texto que aún no se ha "escrito" */
-        border-right: 2px solid white; /* Efecto de cursor */
+        white-space: normal; /* Permite que el texto se divida en varias líneas */
+        word-wrap: break-word; /* Evita que el texto se desborde */
+        max-width: 90%; /* Ajuste para móviles */
       }
 
       @keyframes fadeIn {
